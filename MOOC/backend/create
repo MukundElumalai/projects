@@ -1,0 +1,64 @@
+create table student(
+	first_name varchar(20),
+	last_name varchar(20),
+	user_name varchar(30) primary key,
+	pw varchar(30),
+	loc text
+);
+
+create table course(
+	id int primary key,
+	name varchar(40),
+	commitment varchar(40),
+	min_grade decimal(5,2),
+	course_price decimal(8,2)
+);
+
+create table enrolled_course(
+	id int primary key,
+	student_id varchar(30) references student(user_name),
+	course_id int references course(id),
+	enrol_date varchar(40),
+	status varchar(10),
+	final_grade decimal(5,2)
+);
+
+create table student_result(
+	ec_id int references enrolled_course(id),
+	attempt int,
+	score decimal(5,2),
+	attempt_date varchar(40)
+);
+
+create table chapters(
+	id int primary key,
+	course_id int references course(id),
+	chap_no int,
+	description text,
+	material text
+);
+
+create table admins(
+	user_name varchar(30) primary key,
+	pw varchar(30),
+	first_name varchar(20) not null,
+	last_name varchar(20)
+);
+
+create table lecturer(
+	first_name varchar(20) not null,
+	last_name varchar(20),
+	user_name varchar(30) primary key,
+	pw varchar(30),
+	admin_id varchar(30) references admins(user_name)
+);
+
+create table on_course(
+	lec_id varchar(30) references lecturer(user_name),
+	course_id int references course(id)
+);
+
+create table course_created_by(
+	admin_id varchar(30) references admins(user_name),
+	course_id int references course(id)
+);

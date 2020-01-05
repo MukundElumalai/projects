@@ -1,0 +1,167 @@
+insert into admins(user_name,pw,first_name,last_name) values ('Mukund_nf','1234','Mukund','Elumalai')
+
+create or replace function admin_login(in x varchar(30),in y varchar(30)) returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select first_name,last_name from admins where upper(user_name)=upper(x) and pw=y;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function check_lecturer(in x varchar(30)) returns int
+as $$
+declare
+	ret int:=0;
+	lec cursor for select user_name from lecturer;
+begin
+	for i in lec loop
+		if i.user_name=x then
+			ret:=1;
+		end if;
+	end loop;
+	return ret;
+end;$$
+language plpgsql;
+
+create or replace function check_lecturer_username(in x varchar(30)) returns int
+as $$
+declare
+	ret int:=0;
+begin
+	select count(*) into ret from lecturer where user_name=x;
+	return ret;
+end;$$
+language plpgsql;
+
+create or replace function disp_courses() returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select course.id,course.name,description,commitment,course_price,min_grade,first_name from course,on_course,lecturer where course.id=on_course.course_id and lecturer.user_name=on_course.lec_id;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function disp_lecturers() returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select user_name,first_name,last_name,admin_id,course.id,course.name from lecturer left join on_course on lecturer.user_name=on_course.lec_id left join course on course.id=on_course.course_id;
+	return to_path;
+end;$$
+language plpgsql;
+
+
+create or replace function disp_students_admin() returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select user_name,first_name,last_name,course.id,course.name from student left join enrolled_course on student.user_name=enrolled_course.student_id left join course on course.id=enrolled_course.course_id;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function student_login(in x varchar(30),in y varchar(30)) returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select first_name,last_name from student where upper(user_name)=upper(x) and pw=y;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function disp_lecturers_stud() returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select first_name,last_name,course.id,course.name from lecturer left join on_course on lecturer.user_name=on_course.lec_id left join course on course.id=on_course.course_id;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function disp_enrolled_courses(in x varchar(30)) returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select course.id,course.name,status,final_grade from enrolled_course,course where course.id=enrolled_course.course_id and student_id=x;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function check_course(in x integer,in y varchar(40)) returns int
+as $$
+declare
+	ret int:=0;
+begin
+	select count(*) into ret from enrolled_course where course_id=x and student_id=y;
+	return ret;
+end;$$
+language plpgsql;
+
+create or replace function check_course1(in x integer) returns int
+as $$
+declare
+	ret int:=0;
+begin
+	select count(*) into ret from course where course.id=x;
+	return ret;
+end;$$
+language plpgsql;
+
+create or replace function check_student_username(in x varchar(30)) returns int
+as $$
+declare
+	ret int:=0;
+begin
+	select count(*) into ret from student where user_name=x;
+	return ret;
+end;$$
+language plpgsql;
+
+create or replace function lecturer_login(in x varchar(30),in y varchar(30)) returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select first_name,last_name from lecturer where upper(user_name)=upper(x) and pw=y;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function disp_my_courses(in x varchar(40)) returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select course.id,course.name,description,commitment,course_price,min_grade from course,on_course where course.id=on_course.course_id and on_course.lec_id=x;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function disp_students_lec(in x varchar(40)) returns refcursor
+as $$
+declare
+	to_path refcursor:='cursor1';
+begin
+	open to_path for select enrolled_course.id,user_name,first_name,last_name,course.id,course.name,status,final_grade from student,on_course,course,enrolled_course where student.user_name=enrolled_course.student_id and enrolled_course.course_id=course.id and course.id=on_course.course_id and on_course.lec_id=x;
+	return to_path;
+end;$$
+language plpgsql;
+
+create or replace function check_setmark(in x integer) returns int
+as $$
+declare
+	ret int:=0;
+begin
+	select count(*) into ret from enrolled_course where enrolled_course.id=x;
+	return ret;
+end;$$
+language plpgsql;

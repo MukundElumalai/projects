@@ -1,4 +1,4 @@
-//to implement the optimum 4-position dynamic programming
+//to implement the optimum 4-position dynamic programming algorithm along with 3,5-position algorithms
 #include<iostream>
 using namespace std;
 int J,I;

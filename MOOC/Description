@@ -4,4 +4,21 @@ I have used PostgreSQL for the backend and Python with PyQt for the front end.
 Objective: To imitate a Massive Online Open Courses(M.O.O.C.) platform,
            simulating the functionalities of student, lecturer and administrator.
            
-Note: page1.py is the main program.
+Note: 
+           
+page1.py -> admin_login.py -> admin_main.py   -> new_course.py
+                                              -> add_lec.py
+                                              -> course_details.py
+                                              -> lecturer_details.py
+                                              -> student_details_admin.py
+
+         -> lec_login.py   -> lec_main.py     -> course_details.py
+                                              -> my_course_details.py
+                                              -> my_student_details.py
+                                              -> setmark.py
+                                              
+         -> stud_login.py  -> stud_main.py    -> course_details.py
+                                              -> lecturer_details_stud.py
+                                              -> enrolled_course_details.py
+                                              -> enroll.py
+         -> register.py

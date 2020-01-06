@@ -1,4 +1,5 @@
-This is an academic package on DBMS.
+# sem 4 - DBMS
+
 I have used PostgreSQL for the backend and Python with PyQt for the front end.
 
 Objective: To imitate a Massive Online Open Courses(M.O.O.C.) platform,

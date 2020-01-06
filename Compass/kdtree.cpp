@@ -1,4 +1,6 @@
-//to implement k-d tree
+/*
+    Compass - finding the closest police stations, hotels, hospitals in coimbatore district.
+*/
 #include<iostream>
 #include<math.h>
 #include<string>

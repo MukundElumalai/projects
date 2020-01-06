@@ -1,0 +1,4 @@
+# non academic package during 5th semester
+
+Q-Snake, an automated snake game, developed in Python using pygame where the game
+is played by an agent trained by Q-Learning.

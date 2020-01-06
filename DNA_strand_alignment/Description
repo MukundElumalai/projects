@@ -1,0 +1,7 @@
+# sem 4 - Design and Analysis of Algorithms
+
+The aim of this project is to align two DNA strands in the best way possible in accordance with a scoring system.
+Three Dynamic programming algorithms are used to find the optimal solution.
+  -> 3-position DP
+  -> 4-position DP
+  -> 5-position DP
